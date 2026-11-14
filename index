@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Личная визитка: коротко обо мне, навыки, опыт и контакты.">
+<meta name="theme-color" content="#17140f">
+<title>Александра Морозова — продуктовый дизайнер</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* --- tokens: primitive -> semantic -> component --- */
+:root{
+  --p-ink:      oklch(0.175 0.013 65);
+  --p-ink-2:    oklch(0.215 0.015 65);
+  --p-paper:    oklch(0.935 0.014 82);
+  --p-paper-2:  oklch(0.780 0.018 75);
+  --p-amber:    oklch(0.760 0.148 78);
+  --p-line:     oklch(0.300 0.014 62);
+  --surface:    var(--p-ink);
+  --surface-2:  var(--p-ink-2);
+  --text:       var(--p-paper);
+  --text-2:     var(--p-paper-2);
+  --accent:     var(--p-amber);
+  --line:       var(--p-line);
+  --font-display:"Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body:  "Manrope", "Segoe UI", Arial, sans-serif;
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px;
+  --sp-8: 32px; --sp-12: 48px; --sp-16: 64px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font:16px/1.65 var(--font-body);
+  color:var(--text);
+  background:var(--surface);
+  -webkit-font-smoothing:antialiased;
+  min-height:100dvh;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--accent);color:var(--surface)}
+
+/* фон: тонкие изолинии, сгенерированные кодом */
+.bg-lines{position:fixed;inset:0;z-index:0;pointer-events:none;color:var(--line);opacity:.45}
+.bg-lines svg{width:100%;height:100%}
+.page{position:relative;z-index:1;max-width:1180px;margin:0 auto;
+  padding:var(--sp-12) var(--sp-6);
+  display:grid;grid-template-columns:minmax(300px,5fr) 7fr;gap:var(--sp-16);
+}
+
+/* --- левая колонка (липкая) --- */
+.side{position:sticky;top:var(--sp-12);align-self:start;display:flex;flex-direction:column;gap:var(--sp-6)}
+.avatar{position:relative;width:96px;height:96px}
+.avatar .ring{position:absolute;inset:0;border:1px solid var(--line);border-radius:50%}
+.avatar .ring.r2{inset:-8px;opacity:.55}
+.avatar .ring.r3{inset:-16px;opacity:.3}
+.avatar .mono{
+  position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%, oklch(0.30 0.03 65), var(--surface-2));
+  display:flex;align-items:center;justify-content:center;
+  font:600 34px/1 var(--font-display);color:var(--accent);
+}
+.badge{
+  display:inline-flex;align-items:center;gap:var(--sp-2);
+  font-size:13px;font-weight:600;color:var(--text-2);
+  border:1px solid var(--line);border-radius:999px;
+  padding:6px 14px;align-self:flex-start;
+}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);
+  animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 oklch(0.76 0.148 78 / .55)}
+  70%{box-shadow:0 0 0 10px oklch(0.76 0.148 78 / 0)}
+  100%{box-shadow:0 0 0 0 oklch(0.76 0.148 78 / 0)}
+}
+.side h1{font:600 clamp(34px,4vw,46px)/1.12 var(--font-display);text-wrap:balance}
+.side .role{font-size:17px;color:var(--text-2)}
+.side .role b{color:var(--text);font-weight:600}
+.side .intro{font-size:15px;color:var(--text-2);max-width:36ch}
+
+.cta-row{display:flex;flex-wrap:wrap;gap:var(--sp-3)}
+.btn{
+  display:inline-flex;align-items:center;gap:var(--sp-2);
+  min-height:44px;padding:10px 20px;border-radius:999px;
+  font-weight:600;font-size:15px;
+  transition:transform .2s ease,background .2s ease,color .2s ease,border-color .2s ease;
+}
+.btn.primary{background:var(--accent);color:oklch(0.20 0.03 70)}
+.btn.primary:hover{background:oklch(0.82 0.15 78);color:oklch(0.18 0.03 70)}
+.btn.ghost{border:1px solid var(--line);color:var(--text)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn:active{transform:scale(.97)}
+
+/* якорная навигация */
+.nav{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-2)}
+.nav a{
+  font-size:13px;font-weight:600;color:var(--text-2);
+  padding:8px 12px;border-radius:999px;border:1px solid transparent;
+  transition:color .2s,border-color .2s;
+}
+.nav a:hover{color:var(--text)}
+.nav a.active{color:var(--accent);border-color:var(--line)}
+
+/* --- правая колонка --- */
+.content{display:flex;flex-direction:column;gap:var(--sp-16);min-width:0}
+section{scroll-margin-top:var(--sp-8)}
+.sec-label{
+  font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:var(--sp-6);
+  display:flex;align-items:center;gap:var(--sp-3);
+}
+.sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.about p{max-width:62ch;color:var(--text-2);margin-bottom:var(--sp-4)}
+.about p b{color:var(--text);font-weight:600}
+
+/* списки с разделителями вместо карточек */
+.rows{border-top:1px solid var(--line)}
+.row{
+  display:grid;grid-template-columns:minmax(140px,220px) 1fr;gap:var(--sp-6);
+  padding:var(--sp-5,20px) 0;border-bottom:1px solid var(--line);
+}
+.row h3{font:600 19px/1.35 var(--font-display)}
+.row p{color:var(--text-2);font-size:15px;max-width:52ch}
+.row .period{font-size:13px;font-weight:600;color:var(--text-2);margin-top:var(--sp-1)}
+
+/* большие контактные ссылки */
+.links{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.link-row{
+  display:flex;align-items:center;gap:var(--sp-4);
+  min-height:64px;padding:var(--sp-4) var(--sp-2);
+  border-bottom:1px solid var(--line);
+  transition:padding-left .2s ease,color .2s ease;
+}
+.link-row:hover{padding-left:var(--sp-4);color:var(--accent)}
+.link-row .kind{font-size:13px;font-weight:600;color:var(--text-2);width:88px;flex:none}
+.link-row .value{font:600 19px/1.3 var(--font-display);overflow-wrap:anywhere}
+.link-row .arrow{margin-left:auto;flex:none;transition:transform .2s ease}
+.link-row:hover .arrow{transform:translateX(4px)}
+.copy-btn{
+  flex:none;font-size:13px;font-weight:600;color:var(--text-2);
+  border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:36px;
+  transition:color .2s,border-color .2s;
+}
+.copy-btn:hover{color:var(--accent);border-color:var(--accent)}
+.copy-btn.copied{color:var(--accent);border-color:var(--accent)}
+
+footer{
+  margin-top:var(--sp-8);padding-top:var(--sp-6);
+  border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:var(--sp-4);align-items:center;
+  font-size:13px;color:var(--text-2);
+}
+footer .up{margin-left:auto;font-weight:600;color:var(--text-2)}
+footer .up:hover{color:var(--accent)}
+
+/* --- адаптив --- */
+@media (max-width:900px){
+  .page{grid-template-columns:1fr;gap:var(--sp-12);padding:var(--sp-8) var(--sp-4)}
+  .side{position:static}
+  .content{gap:var(--sp-12)}
+}
+@media (max-width:560px){
+  .row{grid-template-columns:1fr;gap:var(--sp-2)}
+  .link-row .kind{width:70px}
+  .link-row .value{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-lines" aria-hidden="true">
+  <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" fill="none">
+    <path d="M-80 640 C 220 560 380 760 640 660 S 1080 520 1320 620" stroke="currentColor" stroke-width="1"/>
+    <path d="M-80 560 C 240 470 420 690 660 580 S 1100 440 1320 540" stroke="currentColor" stroke-width="1" opacity=".7"/>
+    <path d="M-80 470 C 260 380 460 610 690 500 S 1120 360 1320 460" stroke="currentColor" stroke-width="1" opacity=".45"/>
+    <path d="M-80 740 C 200 680 400 840 640 750 S 1060 620 1320 720" stroke="currentColor" stroke-width="1" opacity=".8"/>
+    <path d="M-80 380 C 280 300 500 520 720 420 S 1140 280 1320 380" stroke="currentColor" stroke-width="1" opacity=".3"/>
+  </svg>
+</div>
+
+<div class="page">
+  <!-- ============ ЛЕВАЯ КОЛОНКА ============ -->
+  <aside class="side">
+    <div class="avatar" aria-hidden="true">
+      <span class="ring"></span><span class="ring r2"></span><span class="ring r3"></span>
+      <span class="mono">АМ</span>
+    </div>
+    <span class="badge"><span class="dot"></span>Открыта для проектов</span>
+    <h1>Александра<br>Морозова</h1>
+    <p class="role"><b>Продуктовый дизайнер</b> · Москва</p>
+    <p class="intro">Проектирую понятные интерфейсы и дизайн-системы, которые команды реально используют.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="mailto:hello@example.com">Написать мне</a>
+      <button class="btn ghost" type="button" data-copy="hello@example.com">Скопировать почту</button>
+    </div>
+    <nav class="nav" aria-label="Разделы страницы">
+      <a href="#about" class="active">Обо мне</a>
+      <a href="#skills">Навыки</a>
+      <a href="#experience">Опыт</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </aside>
+
+  <!-- ============ ПРАВАЯ КОЛОНКА ============ -->
+  <main class="content">
+    <section class="about" id="about">
+      <p class="sec-label">Обо мне</p>
+      <p>Больше восьми лет проектирую цифровые продукты — от стартапов на этапе идеи до больших сервисов с миллионной аудиторией. Люблю участвовать в продукте целиком: от интервью с пользователями до контроля качества вёрстки.</p>
+      <p>Верю, что хороший интерфейс — это <b>спокойствие</b>: ничего лишнего, всё на своём месте, ошибки предупреждены. По вечерам веду небольшую рассылку о дизайн-системах.</p>
+    </section>
+
+    <section id="skills">
+      <p class="sec-label">Навыки</p>
+      <div class="rows">
+        <div class="row">
+          <h3>Исследования</h3>
+          <p>Глубинные интервью, юзабилити-тесты, аналитика поведения. Превращаю находки в решения, а не в отчёты на полке.</p>
+        </div>
+        <div class="row">
+          <h3>Прототипирование</h3>
+          <p>Быстрые кликабельные прототипы в Figma; для сложных сценариев — код на HTML и JavaScript.</p>
+        </div>
+        <div class="row">
+          <h3>Дизайн-системы</h3>
+          <p>Токены, компонентные библиотеки, документация, внедрение в команды разработки. Автор трёх систем, живущих в проде.</p>
+        </div>
+        <div class="row">
+          <h3>Моушн и внимание к деталям</h3>
+          <p>Микровзаимодействия и состояния интерфейса — то, чем продукт отличается от «макета, который сверстали».</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <p class="sec-label">Опыт</p>
+      <div class="rows">
+        <div class="row">
+          <div>
+            <h3>Лид-дизайнер</h3>
+            <p class="period">2021 — настоящее время</p>
+          </div>
+          <p>«Северсталь-дижитал»: руковожу продуктовым дизайном b2b-платформы, выстроила команду из четырёх дизайнеров и библиотеку из 120+ компонентов.</p>
+        </div>
+        <div class="row">
+          <div>
+            <h3>Продуктовый дизайнер</h3>
+            <p class="period">2018 — 2021</p>
+          </div>
+          <p>«Тинькофф»: проектировала мобильный банк для бизнеса — от онбординга до платёжных сценариев; рост NPS продукта за год — на 12 пунктов.</p>
+        </div>
+        <div class="row">
+          <div>
+            <h3>Дизайнер интерфейсов</h3>
+            <p class="period">2016 — 2018</p>
+          </div>
+          <p>Студия «Планета»: сайты и сервисы для заказчиков из ритейла и культуры — от концепции до запуска.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacts">
+      <p class="sec-label">Контакты</p>
+      <div class="links">
+        <a class="link-row" href="mailto:hello@example.com">
+          <span class="kind">Почта</span>
+          <span class="value">hello@example.com</span>
+          <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="link-row" href="https://t.me/username" target="_blank" rel="noopener">
+          <span class="kind">Телеграм</span>
+          <span class="value">@username</span>
+          <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="link-row" href="https://github.com/username" target="_blank" rel="noopener">
+          <span class="kind">GitHub</span>
+          <span class="value">github.com/username</span>
+          <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="cta-row" style="margin-top:var(--sp-6)">
+        <button class="btn ghost" type="button" id="vcf-btn">Сохранить контакт (.vcf)</button>
+      </div>
+    </section>
+
+    <footer>
+      <span>© <span id="year">2026</span> Александра Морозова</span>
+      <span>Москва · <span id="clock">--:--</span></span>
+      <a class="up" href="#top">Наверх ↑</a>
+    </footer>
+  </main>
+</div>
+<script>
+(function(){
+  "use strict";
+
+  /* ---- год и московское время ---- */
+  document.getElementById("year").textContent = new Date().getFullYear();
+  var clockEl = document.getElementById("clock");
+  function tick(){
+    clockEl.textContent = new Intl.DateTimeFormat("ru-RU",{
+      timeZone:"Europe/Moscow", hour:"2-digit", minute:"2-digit"
+    }).format(new Date());
+  }
+  tick();
+  setInterval(tick, 30000);
+
+  /* ---- копирование в буфер ---- */
+  document.querySelectorAll("[data-copy]").forEach(function(btn){
+    var original = btn.textContent;
+    btn.addEventListener("click", function(){
+      var text = btn.getAttribute("data-copy");
+      function done(){
+        btn.textContent = "Скопировано ✓";
+        btn.classList.add("copied");
+        setTimeout(function(){
+          btn.textContent = original;
+          btn.classList.remove("copied");
+        }, 1600);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(fallback);
+      } else { fallback(); }
+      function fallback(){
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); }
+        catch(e){ btn.textContent = text; }
+        document.body.removeChild(ta);
+      }
+    });
+  });
+
+  /* ---- скачивание визитки (.vcf) ---- */
+  document.getElementById("vcf-btn").addEventListener("click", function(){
+    var vcf = [
+      "BEGIN:VCARD",
+      "VERSION:3.0",
+      "N:Морозова;Александра;;;",
+      "FN:Александра Морозова",
+      "TITLE:Продуктовый дизайнер",
+      "EMAIL;TYPE=INTERNET:hello@example.com",
+      "URL:https://t.me/username",
+      "END:VCARD"
+    ].join("\r\n");
+    var blob = new Blob([vcf], {type:"text/vcard;charset=utf-8"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = "alexandra-morozova.vcf";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  });
+
+  /* ---- подсветка активного пункта навигации ---- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav a"));
+  var sections = navLinks.map(function(a){ return document.querySelector(a.getAttribute("href")); });
+  if ("IntersectionObserver" in window){
+    var visible = new Set();
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) visible.add(en.target.id);
+        else visible.delete(en.target.id);
+      });
+      var first = sections.find(function(s){ return s && visible.has(s.id); });
+      navLinks.forEach(function(a){
+        a.classList.toggle("active", first && a.getAttribute("href") === "#" + first.id);
+      });
+    }, {rootMargin:"-30% 0px -55% 0px"});
+    sections.forEach(function(s){ if (s) io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
